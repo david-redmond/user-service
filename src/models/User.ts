@@ -1,37 +1,35 @@
-import { Model, Schema, model } from 'mongoose';
+import { Model, Schema, model } from "mongoose";
 
 interface IUser {
-    firstname: string;
-    surname: string;
-    email: string;
-    password: string;
+  firstname: string;
+  surname: string;
+  email: string;
+  password: string;
 }
 
 interface UserModel extends Model<IUser> {
-    // myStaticMethod(): number;
+  // myStaticMethod(): number;
 }
 
 const userSchema = new Schema<IUser, UserModel>({
-    firstname: {
-        type: String,
-        required: true
-    },
-    surname: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
+  firstname: {
+    type: String,
+    required: true,
+  },
+  surname: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
-const User = model<IUser, UserModel>('Users', userSchema);
+const User = model<IUser, UserModel>("Users", userSchema);
 
-export {
-    User
-}
+export { User };
