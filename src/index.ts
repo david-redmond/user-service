@@ -22,7 +22,6 @@ app.post('/check', async (req, res) => {
             console.error('Error POST /check : user not found', req.body.email);
             return res.status(404).send('Not Found');
         }
-        user.password = undefined;
         res.json(user);
     } catch (error) {
         console.error('Error POST /check : server error', error.code, error.message, error.config);
@@ -35,7 +34,7 @@ app.post('/', async (req: any, res) => {
         const { firstname, surname, email, hashedPassword } = req.body;
         const user = await User.findOne({ email: req.body.email });
         if (user) {
-            console.log('Error POST /create: User already exists');
+            console.log('Error POST / : User already exists');
             return res.status(403).send('User exists');
         }
         // Create new user
@@ -48,7 +47,7 @@ app.post('/', async (req: any, res) => {
         await newUser.save();
         res.status(202).json({ message: 'User created successfully' });
     } catch (error) {
-        console.error("Error POST /create: Server Error", error.code, error.message, error.config);
+        console.error("Error POST / : Server Error", error.code, error.message, error.config);
         res.status(500).send("Server Error");
     }
 });
