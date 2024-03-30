@@ -103,7 +103,7 @@ app.delete("/:userId", async (req: any, res) => {
 
 app.put('/:userId', async (req: any, res) => {
     try {
-        const { firstname, surname, email } = req.body
+        const { firstname, surname, email, attributes } = req.body
         const user = await User.findById(req.params.userId);
         if (!user) {
             console.error('Error PUT / : user not found', req.params.userId);
@@ -118,6 +118,12 @@ app.put('/:userId', async (req: any, res) => {
         }
         if (email !== undefined) {
             updatedFields.email = email;
+        }
+        if (attributes !== undefined) {
+            updatedFields.attributes = {
+                ...user.attributes,
+                ...attributes
+            };
         }
 
     await User.findOneAndUpdate({ _id: req.params.userId }, updatedFields);

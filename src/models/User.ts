@@ -5,6 +5,7 @@ interface IUser {
   surname: string;
   email: string;
   password: string;
+  attributes: { [key: string]: any };
 }
 
 interface UserModel extends Model<IUser> {
@@ -28,6 +29,7 @@ const userSchema = new Schema<IUser, UserModel>({
     type: String,
     required: true,
   },
+  attributes: Object,
 });
 
 const User = model<IUser, UserModel>("Users", userSchema);
