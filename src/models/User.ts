@@ -29,8 +29,11 @@ const userSchema = new Schema<IUser, UserModel>({
     type: String,
     required: true,
   },
-  attributes: Object,
-});
+  attributes: {
+    type: Object,
+    required: true
+  },
+}, { minimize: false });
 
 const User = model<IUser, UserModel>("Users", userSchema);
 

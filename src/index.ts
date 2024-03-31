@@ -35,7 +35,13 @@ app.post("/check", async (req, res) => {
 
 app.post("/", async (req: any, res) => {
   try {
-    const { firstname, surname, email, hashedPassword } = req.body;
+    const {
+      firstname,
+      surname,
+      email,
+      hashedPassword,
+      attributes = {},
+    } = req.body;
     const user = await User.findOne({ email: req.body.email });
     if (user) {
       console.log("Error POST /: User already exists");
@@ -47,7 +53,9 @@ app.post("/", async (req: any, res) => {
       surname: surname,
       email: email,
       password: hashedPassword,
-      attributes: {}
+      attributes: {
+        ...attributes,
+      },
     });
     await newUser.save();
     res.status(202).json({ message: "User created successfully" });
@@ -104,7 +112,7 @@ app.delete("/:userId", async (req: any, res) => {
 
 app.put("/:userId", async (req: any, res) => {
   try {
-    const { firstname, surname, email, attributes } = req.body;
+    const { firstname, surname, email, attributes = {} } = req.body;
     const user = await User.findById(req.params.userId);
     if (!user) {
       console.error("Error PUT / : user not found", req.params.userId);
@@ -120,9 +128,10 @@ app.put("/:userId", async (req: any, res) => {
     if (email !== undefined) {
       updatedFields.email = email;
     }
-    if (attributes !== undefined) {
-      updatedFields.attributes = attributes;
-    }
+
+    updatedFields.attributes = {
+      ...attributes,
+    };
 
     await User.findOneAndUpdate({ _id: req.params.userId }, updatedFields);
     res.json({ message: "User successfully updated" });
