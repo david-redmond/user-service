@@ -47,6 +47,7 @@ app.post("/", async (req: any, res) => {
       surname: surname,
       email: email,
       password: hashedPassword,
+      attributes: {}
     });
     await newUser.save();
     res.status(202).json({ message: "User created successfully" });
