@@ -101,30 +101,27 @@ app.delete("/:userId", async (req: any, res) => {
   }
 });
 
-app.put('/:userId', async (req: any, res) => {
-    try {
-        const { firstname, surname, email, attributes } = req.body
-        const user = await User.findById(req.params.userId);
-        if (!user) {
-            console.error('Error PUT / : user not found', req.params.userId);
-            return res.status(404).send('Not Found');
-        }
-        const updatedFields: any = {};
-        if (firstname !== undefined) {
-            updatedFields.firstname = firstname;
-        }
-        if (surname !== undefined) {
-            updatedFields.surname = surname;
-        }
-        if (email !== undefined) {
-            updatedFields.email = email;
-        }
-        if (attributes !== undefined) {
-            updatedFields.attributes = {
-                ...user.attributes,
-                ...attributes
-            };
-        }
+app.put("/:userId", async (req: any, res) => {
+  try {
+    const { firstname, surname, email, attributes } = req.body;
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      console.error("Error PUT / : user not found", req.params.userId);
+      return res.status(404).send("Not Found");
+    }
+    const updatedFields: any = {};
+    if (firstname !== undefined) {
+      updatedFields.firstname = firstname;
+    }
+    if (surname !== undefined) {
+      updatedFields.surname = surname;
+    }
+    if (email !== undefined) {
+      updatedFields.email = email;
+    }
+    if (attributes !== undefined) {
+      updatedFields.attributes = attributes;
+    }
 
     await User.findOneAndUpdate({ _id: req.params.userId }, updatedFields);
     res.json({ message: "User successfully updated" });
