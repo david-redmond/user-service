@@ -21,7 +21,6 @@ app.post("/check", async (req, res) => {
       console.error("Error POST /check : user not found", req.body.email);
       return res.status(404).send("Not Found");
     }
-    user.password = undefined;
     res.json(user);
   } catch (error) {
     console.error(
