@@ -18,6 +18,7 @@ COPY . .
 
 RUN npm run build
 
+EXPOSE 8010
 # Start the application
 CMD ["node", "./dist/index.js"]
 
