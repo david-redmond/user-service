@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import * as bodyParser from "body-parser";
 import { mongoConnection } from "./database/connection";
 import { User } from "./models/User";
+import * as cors from "cors";
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
+app.use(cors())
 // MongoDB connection
 mongoConnection();
 
