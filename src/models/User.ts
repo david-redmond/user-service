@@ -4,7 +4,8 @@ interface IUser {
   firstname: string;
   surname: string;
   email: string;
-  password: string;
+  password?: string;
+  provider: string;
   attributes: { [key: string]: any };
 }
 
@@ -26,6 +27,10 @@ const userSchema = new Schema<IUser, UserModel>({
     required: true,
   },
   password: {
+    type: String,
+    required: true,
+  },
+  provider: {
     type: String,
     required: true,
   },

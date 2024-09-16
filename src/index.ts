@@ -15,62 +15,6 @@ app.use(cors())
 // MongoDB connection
 mongoConnection();
 
-app.post("/check", async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      console.error("Error POST /check : user not found", req.body.email);
-      return res.status(404).send("Not Found");
-    }
-    res.json(user);
-  } catch (error) {
-    console.error(
-      "Error POST /check : server error",
-      error.code,
-      error.message,
-      error.config,
-    );
-    return res.status(500).send("Server Error");
-  }
-});
-
-app.post("/", async (req: any, res) => {
-  try {
-    const {
-      firstname,
-      surname,
-      email,
-      hashedPassword,
-      attributes = {},
-    } = req.body;
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      console.log("Error POST /: User already exists");
-      return res.status(403).send("User exists");
-    }
-    // Create new user
-    const newUser = new User({
-      firstname: firstname,
-      surname: surname,
-      email: email,
-      password: hashedPassword,
-      attributes: {
-        ...attributes,
-      },
-    });
-    await newUser.save();
-    res.status(202).json({ message: "User created successfully" });
-  } catch (error) {
-    console.error(
-      "Error POST /: Server Error",
-      error.code,
-      error.message,
-      error.config,
-    );
-    res.status(500).send("Server Error");
-  }
-});
-
 app.get("/:userId", async (req: any, res) => {
   try {
     const user = await User.findById(req.params.userId);
